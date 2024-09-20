@@ -1,0 +1,32 @@
+AuthScreen {
+    layout: grid;
+    padding: 2;
+}
+
+#auth-label {
+    grid-rows: 1;
+    text-align: center;
+}
+
+#username {
+    grid-rows: 2;
+    width: 100%;
+}
+
+#password {
+    grid-rows: 3;
+    width: 100%;
+}
+
+#error {
+    grid-rows: 4;
+    text-align: center;
+    color: red;
+}
+
+#submit_button {
+    grid-rows: 5;
+    width: 100%;
+    margin-top: 1;
+    color: red
+}
