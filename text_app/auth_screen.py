@@ -1,5 +1,5 @@
 from textual.app import App, ComposeResult
-from textual.containers import Container
+from textual.containers import Container, Vertical
 from textual.widgets import Button, Static, Input
 from textual.screen import Screen
 from main_screen import MainScreen
@@ -11,22 +11,32 @@ class AuthScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """Создание виджетов экрана авторизации."""
-        yield Static(renderable = "Login", id="auth-label")
-        self.username_input = Input(placeholder="Enter your username", id="username")
-        self.password_input = Input(placeholder="Enter your password", id="password")
-        yield Static(renderable = 'Ошибка', id="error")
-        yield self.username_input
-        yield self.password_input
-        yield Button("Submit", id="submit_button")
+        yield Container(
+            Static(renderable = "Log in to your account", id="auth-label"),
+            Static(renderable = 'Ошибка', id="error"),
+            Vertical(
+                Input(placeholder="Enter your username", id="username"),
+                Input(placeholder="Enter your password", id="password", password=True),
+                    Container(
+                        Button("Login", id="submit_button", variant="default"),
+                        id='button_container',
+                    ),
+                id='vertical_input'
+            ),
+                id='auth_container'
+            )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Обработчик нажатия на кнопку."""
         if event.button.id == "submit_button":
-            if auth(self.username_input, self.password_input):
+            
+            username = self.query_one("#username", Input).value
+            password = self.query_one("#password", Input).value
+
+            if auth(username, password):
                 self.app.push_screen(MainScreen())
             else:
-                self.remove_class("login")
-                self.add_class("error")
+                self.add_class("label")
                 
 
 
