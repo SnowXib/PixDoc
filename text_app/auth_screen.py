@@ -37,11 +37,10 @@ class AuthScreen(Screen):
                 self.app.push_screen(MainScreen())
             else:
                 self.add_class("label")
-                
-
 
             
 def auth(user, password):
+    """Симуляция аутентификации"""
     if user == 'admin' and password == 'password':
         return 1
     return 0
